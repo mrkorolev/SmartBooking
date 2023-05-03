@@ -1,0 +1,8 @@
+body {
+    padding-top: 56px;
+}
+
+footer {
+    position: sticky;
+    bottom: 0px;
+}

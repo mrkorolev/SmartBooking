@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">Bookings</title>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav    th:insert="fragments.html :: navigation"
+        class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <h1 class="my-4">
+                <span>Available bookings</span>
+            </h1>
+
+            <!-- Appointments -->
+            <div th:each="appointment: ${appointments}"
+                    th:if="${appointment.user} == null"
+                    th:id="'appointment-' + ${appointment.appointmentId}" class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title" th:text="${appointment.title}"></h2>
+                    <p class="card-text" th:text="${appointment.reason}"></p>
+                    Status: <a th:text="${appointment.status}" class="btn btn-success"></a>
+                </div>
+                <div class="card-footer text-muted">
+                    Booking for:
+                    <span th:text="${#temporals.format(appointment.dtGenerated, 'dd/MM/yyyy HH:mm')}"></span>
+                    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+                       th:href="@{/user/{username}(username = ${appointment.user.username})}"
+                       th:text="${appointment.user.username}"></a>
+                    <a th:if="${#authorization.expression('hasRole(''PATIENT'')')}"
+                       th:href="@{/appointment/book/{appointmentId}(appointmentId = ${appointment.appointmentId})}"
+                       class="btn btn-primary"
+                       style="float: right;">Book</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<footer th:if="${appointments.size() != 0}" th:insert="fragments.html :: footer"></footer>
+
+</body>
+
+</html>
