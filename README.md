@@ -1,5 +1,5 @@
 
-## booking-system
+## SmartBooking
 ![license](https://img.shields.io/github/license/mrkorolev/booking-system)
 ![version](https://img.shields.io/github/v/release/mrkorolev/booking-system?display_name=tag)
 
